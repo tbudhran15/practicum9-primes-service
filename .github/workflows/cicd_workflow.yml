@@ -28,7 +28,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Build project
-        run: ./mvnw clean package -DskipTests
+        run: run: mvn clean package -DskipTests
 
       - name: Build Docker image
         run: docker build -t $REGISTRY_URL/primes-service:$SERVICE_VERSION .
