@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: primes-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: primes-service
+  template:
+    metadata:
+      labels:
+        app: primes-service
+    spec:
+      containers:
+        - name: primes-service
+          image: tbudhranpracticum.azurecr.io/primes-service:v1
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: primes-service
+spec:
+  selector:
+    app: primes-service
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: LoadBalancer
+
