@@ -1,0 +1,6 @@
+docker build -t primes-service --file Dockerfile .
+
+docker run -d -p 8080:8080 primes-service
+
+docker build -t rudraman/primes-service:latest .
+docker push rudraman/primes-service:latest
