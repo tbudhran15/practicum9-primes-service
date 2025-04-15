@@ -34,4 +34,13 @@ jobs:
         run: docker build -t $REGISTRY_URL/primes-service:$SERVICE_VERSION .
 
       - name: Login to Azure Container Registry
-        run: echo $REGISTRY_PASSWORD_
+        run: echo $REGISTRY_PASSWORD | docker login $REGISTRY_URL -u $REGISTRY_USERNAME --password-stdin
+
+      - name: Push Docker image
+        run: docker push $REGISTRY_URL/primes-service:$SERVICE_VERSION
+
+      - name: Deploy to AKS
+        run: |
+          echo "$KUBE_CONFIG" | base64 -d > $HOME/.kube/config
+          kubectl get nodes
+          kubectl apply -f k8s/deploy.yaml
